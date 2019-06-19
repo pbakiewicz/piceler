@@ -1,5 +1,5 @@
 # piceler
-Django app for async uploading and modyfing pictures
+Django app for async uploading and modyfing pictures with celery
 
 ## Built With
 * [Django](https://www.djangoproject.com/) - Web framework
