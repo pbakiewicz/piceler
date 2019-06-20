@@ -1,3 +1,6 @@
-from django.shortcuts import render
+from .models import Picture
+from django.views.generic import ListView
 
-# Create your views here.
+class PictureListView(ListView):
+
+    model = Picture
