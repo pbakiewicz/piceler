@@ -2,11 +2,11 @@ from django.db import models
 from PIL import Image
 from io import BytesIO
 from django.core.files.base import ContentFile
-
+from main.generic import upload_to
 
 class Picture(models.Model):
     name = models.CharField(max_length=50)
-    image = models.ImageField(upload_to="img")
+    image = models.ImageField(upload_to=upload_to("img"))
     modified_img = models.ImageField(upload_to="img", blank=True, editable=False)
 
     def save(self, *args, **kwargs):
@@ -29,4 +29,5 @@ class Picture(models.Model):
 
         except Exception as e:
             raise e
+
 
