@@ -19,13 +19,17 @@ class Picture(models.Model):
 
     def make_thumbnail(self):
         try:
+
             image = Image.open(self.image)
+            ext = self.image.name.split(".")[-1]
+            # for Pillow accapted extension
+            pillow_ext = ext if ext.lower() != "jpg" else "JPEG"
             image.thumbnail((20,20))
 
             with BytesIO() as temp_bytes:
-                image.save(temp_bytes, format='PNG')
+                image.save(temp_bytes, format=pillow_ext)
                 temp_bytes.seek(0)
-                self.modified_img.save(self.name + "_mini", ContentFile(temp_bytes.read()), save=False)
+                self.modified_img.save(self.name + "_mini."  + ext, ContentFile(temp_bytes.read()), save=False)
 
         except Exception as e:
             raise e
