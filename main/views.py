@@ -9,5 +9,5 @@ class PictureListView(ListView):
 
 class PictureFormView(FormView):
 
-    tempalte_name = "send_picture.html"
+    template_name = "send_picture.html"
     form_class = PictureForm
