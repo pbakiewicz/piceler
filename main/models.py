@@ -7,7 +7,7 @@ from django.core.files.base import ContentFile
 class Picture(models.Model):
     name = models.CharField(max_length=50)
     image = models.ImageField(upload_to="img")
-    modified_img = models.ImageField(upload_to="img", editable=False)
+    modified_img = models.ImageField(upload_to="img", blank=True, editable=False)
 
     def save(self, *args, **kwargs):
         try:
