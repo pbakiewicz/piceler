@@ -1,37 +1,15 @@
 from django.db import models
-from PIL import Image
-from io import BytesIO
-from django.core.files.base import ContentFile
 from main.generic import upload_to
+
 
 class Picture(models.Model):
     name = models.CharField(max_length=50)
     image = models.ImageField(upload_to=upload_to("img"))
     modified_img = models.ImageField(upload_to="img", blank=True, editable=False)
 
-    def save(self, *args, **kwargs):
-        try:
-            self.make_thumbnail()
-        except Exception as e:
-            print("Couldn't create a thumbnail ", e)
+    def __str__(self):
+        return f"{self.id}. {self.name}"
 
-        super().save(*args, **kwargs)
 
-    def make_thumbnail(self):
-        try:
-
-            image = Image.open(self.image)
-            ext = self.image.name.split(".")[-1]
-            # for Pillow accapted extension
-            pillow_ext = ext if ext.lower() != "jpg" else "JPEG"
-            image.thumbnail((20,20))
-
-            with BytesIO() as temp_bytes:
-                image.save(temp_bytes, format=pillow_ext)
-                temp_bytes.seek(0)
-                self.modified_img.save(self.name + "_mini."  + ext, ContentFile(temp_bytes.read()), save=False)
-
-        except Exception as e:
-            raise e
 
 
