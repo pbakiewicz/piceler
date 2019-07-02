@@ -1,8 +1,8 @@
 from .models import Picture
 from django.views.generic import ListView
-from django.views.generic.edit import CreateView
-from django.urls import reverse_lazy
+from django.shortcuts import render
 from .forms import PictureForm
+from .tasks import modify_picture
 
 
 class PictureListView(ListView):
@@ -10,8 +10,17 @@ class PictureListView(ListView):
     model = Picture
 
 
-class PictureCreate(CreateView):
-    model = Picture
-    success_url = reverse_lazy("new-pic")
-    form_class = PictureForm
+def add_picture(request):
+    if request.method == "POST":
+        form = PictureForm(request.POST, request.FILES)
+        if form.is_valid():
+            obj = form.save()
+
+            #starting celery task
+            modify_picture.delay(obj.id)
+
+    else:
+        form = PictureForm()
+
+    return render(request, "main/picture_form.html", {"form": form})
 
