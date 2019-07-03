@@ -11,7 +11,7 @@ def modify_picture(id_picture, *args, **kwargs):
         ext = pic.image.name.split(".")[-1]
         image.thumbnail((20, 20))
 
-        image.save("img/" + pic.name + "_mini." + ext)
+        image.save("media/img/" + pic.name + "_mini." + ext)
     except Exception as e:
         raise e
 
