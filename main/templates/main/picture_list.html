@@ -1,4 +1,6 @@
 
 {% for object in object_list %}
 {{ object.name }}
+<img src="{{ object.image.url }}" style="width:100px"/>
+<img src="{{ object.modified_img.url }}" style="width:100px"/>
 {% endfor %}
