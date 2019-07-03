@@ -10,7 +10,7 @@ class UploadFile(TestCase):
 
     def test_upload(self):
         self.factory = RequestFactory()
-        request = self.factory.post("/pics/new_picture/", {"name": "super"})
+        request = self.factory.post("/pics/new_picture/", {"name": "super2"})
 
         img_path = os.path.join(settings.BASE_DIR, "main/test_image.jpg")
         with open(img_path, 'rb') as f:

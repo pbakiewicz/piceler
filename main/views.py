@@ -10,17 +10,13 @@ class PictureListView(ListView):
     model = Picture
 
 
-
 def add_picture(request):
     if request.method == "POST":
         form = PictureForm(request.POST, request.FILES)
         if form.is_valid():
             obj = form.save()
-            print("valid")
             #starting celery task
             modify_picture.delay(obj.id)
-        else:
-            print("not valid")
 
     else:
         form = PictureForm()
