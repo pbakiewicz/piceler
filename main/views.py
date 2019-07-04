@@ -15,8 +15,9 @@ def add_picture(request):
         form = PictureForm(request.POST, request.FILES)
         if form.is_valid():
             obj = form.save()
+
             #starting celery task
-            modify_picture.delay(obj.id)
+            modify_picture.delay(obj.id, form.cleaned_data['ext'])
 
     else:
         form = PictureForm()
